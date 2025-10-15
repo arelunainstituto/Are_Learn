@@ -1,0 +1,13 @@
+#keyword,parent_folder/subfolder,contexto,tags
+digitaliza,referencia/ref_digitalizacao,ref,#documentos
+banca,projetos/projeto_banca,proj,#ai_processar
+contrato,referencia/ref_contratos,ref,#juridico
+debito,referencia/ref_financas,ref,#financeiro
+arethuza,projetos/projeto_arethuza,proj,#cliente_arethuza
+cartao cidadao,pessoal/pessoal_documentos,pers,#documentos
+excel,aprendizado/aprendizado_excel,aprend,#estudo
+aluguel,pessoal/pessoal_moradia,pers,#financeiro
+checklist,pessoal/pessoal_tarefas,pers,#tarefas
+credito,referencia/ref_financas,ref,#financeiro
+ccr,referencia/ref_documentos,ref,#documentos
+anotacoes,inbox,ideia,#revisar

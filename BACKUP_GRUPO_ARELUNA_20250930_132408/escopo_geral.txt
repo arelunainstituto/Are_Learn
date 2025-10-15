@@ -1,0 +1,9 @@
+# ERP Grupo AreLuna – Escopo Geral
+Holding: Vespasian Ventures, Lda.
+Empresas: Instituto AreLuna, Pinklegion, Papagaio Fotogénico, Nuvens Autóctones, ProStoral.
+
+Objetivo: ERP modular (núcleo comum + módulos por empresa).
+- Multi-tenant por empresa/unidade; RBAC via Azure AD
+- Intercompany Orders, Financeiro leve, Logística & Frota, Agenda Clínica
+- Integrações: Microsoft 365, Zoho CRM, Evolution API, Azure Blob
+- Observabilidade & Auditoria; conformidade GDPR

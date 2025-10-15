@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste - Lending Platform</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .test-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .test-button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏦 Teste - Sistema de Empréstimos</h1>
+        
+        <div class="status">
+            ✅ Página carregada com sucesso!
+        </div>
+        
+        <h2>Testes de Funcionalidade:</h2>
+        
+        <button class="test-button" onclick="testJS()">Testar JavaScript</button>
+        <button class="test-button" onclick="testLocalStorage()">Testar LocalStorage</button>
+        <button class="test-button" onclick="testConsole()">Testar Console</button>
+        
+        <div id="test-results"></div>
+        
+        <h2>Informações do Sistema:</h2>
+        <ul>
+            <li><strong>User Agent:</strong> <span id="userAgent"></span></li>
+            <li><strong>URL Atual:</strong> <span id="currentUrl"></span></li>
+            <li><strong>Timestamp:</strong> <span id="timestamp"></span></li>
+        </ul>
+        
+        <h2>Links de Navegação:</h2>
+        <p>
+            <a href="/" style="color: #007bff; text-decoration: none;">← Voltar para a Aplicação Principal</a>
+        </p>
+    </div>
+
+    <script>
+        // Preencher informações do sistema
+        document.getElementById('userAgent').textContent = navigator.userAgent;
+        document.getElementById('currentUrl').textContent = window.location.href;
+        document.getElementById('timestamp').textContent = new Date().toLocaleString();
+        
+        function testJS() {
+            const results = document.getElementById('test-results');
+            results.innerHTML = '<div class="status">✅ JavaScript está funcionando corretamente!</div>';
+        }
+        
+        function testLocalStorage() {
+            const results = document.getElementById('test-results');
+            try {
+                localStorage.setItem('test', 'funcionando');
+                const value = localStorage.getItem('test');
+                localStorage.removeItem('test');
+                results.innerHTML = '<div class="status">✅ LocalStorage está funcionando: ' + value + '</div>';
+            } catch (e) {
+                results.innerHTML = '<div style="background: #f8d7da; color: #721c24; padding: 10px; border-radius: 4px;">❌ Erro no LocalStorage: ' + e.message + '</div>';
+            }
+        }
+        
+        function testConsole() {
+            const results = document.getElementById('test-results');
+            console.log('Teste do console executado com sucesso!');
+            console.info('Informação de teste');
+            console.warn('Aviso de teste');
+            results.innerHTML = '<div class="status">✅ Mensagens enviadas para o console (verifique o DevTools)</div>';
+        }
+        
+        // Log de inicialização
+        console.log('🏦 Página de teste carregada com sucesso!');
+        console.log('Timestamp:', new Date().toISOString());
+    </script>
+</body>
+</html>

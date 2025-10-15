@@ -1,0 +1,60 @@
+{
+  "timestamp": "2025-10-11T12:32:42.707Z",
+  "root": "/Users/dr.saraiva/Documents/TRAe-Projects",
+  "index": {
+    "total": 43,
+    "ok": 43,
+    "broken": 0,
+    "brokenList": []
+  },
+  "meta": {
+    "root": {
+      "base": "/Users/dr.saraiva/Documents/TRAe-Projects",
+      "present": 5,
+      "missing": 3,
+      "details": [
+        "/Users/dr.saraiva/Documents/TRAe-Projects/.trae",
+        "/Users/dr.saraiva/Documents/TRAe-Projects/BACKUP_GRUPO_ARELUNA_20250930_132408",
+        "/Users/dr.saraiva/Documents/TRAe-Projects/Grupo AreLuna"
+      ]
+    },
+    "inbox": {
+      "base": "/Users/dr.saraiva/Documents/TRAe-Projects/_Inbox",
+      "present": 0,
+      "missing": 0,
+      "details": []
+    },
+    "group": {
+      "base": "/Users/dr.saraiva/Documents/TRAe-Projects/Grupo AreLuna",
+      "present": 6,
+      "missing": 25,
+      "details": [
+        "/Users/dr.saraiva/Documents/TRAe-Projects/Grupo AreLuna/.git",
+        "/Users/dr.saraiva/Documents/TRAe-Projects/Grupo AreLuna/.github",
+        "/Users/dr.saraiva/Documents/TRAe-Projects/Grupo AreLuna/.trae",
+        "/Users/dr.saraiva/Documents/TRAe-Projects/Grupo AreLuna/ARQUIVO",
+        "/Users/dr.saraiva/Documents/TRAe-Projects/Grupo AreLuna/Branding AreLuna",
+        "/Users/dr.saraiva/Documents/TRAe-Projects/Grupo AreLuna/Branding Prostoral",
+        "/Users/dr.saraiva/Documents/TRAe-Projects/Grupo AreLuna/Branding Vespasian Ventures",
+        "/Users/dr.saraiva/Documents/TRAe-Projects/Grupo AreLuna/DADOS",
+        "/Users/dr.saraiva/Documents/TRAe-Projects/Grupo AreLuna/DOCUMENTACAO",
+        "/Users/dr.saraiva/Documents/TRAe-Projects/Grupo AreLuna/EMPRESAS",
+        "/Users/dr.saraiva/Documents/TRAe-Projects/Grupo AreLuna/FERRAMENTAS",
+        "/Users/dr.saraiva/Documents/TRAe-Projects/Grupo AreLuna/HOLDING",
+        "/Users/dr.saraiva/Documents/TRAe-Projects/Grupo AreLuna/MDN",
+        "/Users/dr.saraiva/Documents/TRAe-Projects/Grupo AreLuna/Regras Gerais",
+        "/Users/dr.saraiva/Documents/TRAe-Projects/Grupo AreLuna/docs",
+        "/Users/dr.saraiva/Documents/TRAe-Projects/Grupo AreLuna/extractors",
+        "/Users/dr.saraiva/Documents/TRAe-Projects/Grupo AreLuna/node_modules",
+        "/Users/dr.saraiva/Documents/TRAe-Projects/Grupo AreLuna/packages",
+        "/Users/dr.saraiva/Documents/TRAe-Projects/Grupo AreLuna/pages",
+        "/Users/dr.saraiva/Documents/TRAe-Projects/Grupo AreLuna/parsers",
+        "/Users/dr.saraiva/Documents/TRAe-Projects/Grupo AreLuna/reports",
+        "/Users/dr.saraiva/Documents/TRAe-Projects/Grupo AreLuna/samples",
+        "/Users/dr.saraiva/Documents/TRAe-Projects/Grupo AreLuna/tests",
+        "/Users/dr.saraiva/Documents/TRAe-Projects/Grupo AreLuna/utils",
+        "/Users/dr.saraiva/Documents/TRAe-Projects/Grupo AreLuna/validators"
+      ]
+    }
+  }
+}

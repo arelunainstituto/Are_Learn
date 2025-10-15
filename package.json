@@ -1,0 +1,46 @@
+{
+  "name": "trae-projects",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Root workspace for Trae AI projects with indexing and import utilities",
+  "scripts": {
+    "dev": "turbo run dev --parallel",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "type-check": "turbo run type-check",
+    "test": "turbo run test",
+    "coverage": "turbo run coverage",
+    "dev:all": "node scripts/serve-local.js",
+    "meta": "node scripts/scaffold-meta.js",
+    "index": "node scripts/index-projects.js",
+    "status": "node scripts/status.js",
+    "import:inbox": "bash scripts/import-inbox.sh",
+    "import:inbox:dry": "bash scripts/import-inbox.sh --dry-run",
+    "postimport": "npm run meta && npm run index && npm run status",
+    "workspace:map": "node scripts/map-workspace.js",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,cjs,mjs,json,md}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "packageManager": "pnpm@9.0.0",
+  "engines": {
+    "node": ">=16"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^18.0.0",
+    "commitlint": "^18.0.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-unicorn": "^50.0.0",
+    "husky": "^9.0.0",
+    "lint-staged": "^15.0.0",
+    "prettier": "^3.3.3",
+    "turbo": "^1.13.0",
+    "typescript": "^5.6.2",
+    "vitest": "^1.6.0"
+  }
+}
