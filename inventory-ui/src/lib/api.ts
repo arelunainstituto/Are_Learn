@@ -124,6 +124,34 @@ class ApiClient {
       body: JSON.stringify(data),
     })
   }
+
+  // Companies
+  async getCompanies(tenantId: string, params?: any) {
+    const queryString = new URLSearchParams({
+      tenantId,
+      ...params,
+    }).toString()
+    
+    return this.request(`/api/companies?${queryString}`)
+  }
+
+  async getCompany(tenantId: string, id: string) {
+    return this.request(`/api/companies/${id}?tenantId=${tenantId}`)
+  }
+
+  async createCompany(data: any) {
+    return this.request('/api/companies', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    })
+  }
+
+  async updateCompany(id: string, data: any) {
+    return this.request(`/api/companies/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    })
+  }
 }
 
 export const apiClient = new ApiClient()

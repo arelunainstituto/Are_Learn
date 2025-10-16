@@ -1,13 +1,30 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "pipeline": {
-    "dev": { "cache": false, "persistent": true },
+  "tasks": {
+    "dev": { 
+      "cache": false, 
+      "persistent": true,
+      "dependsOn": []
+    },
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**", "build/**"]
+      "outputs": ["dist/**", ".next/**", "build/**"],
+      "inputs": ["src/**", "package.json", "tsconfig.json"]
     },
-    "lint": { "outputs": [] },
-    "type-check": { "outputs": [] },
-    "test": { "dependsOn": ["^build"], "outputs": ["coverage/**"] }
+    "lint": { 
+      "outputs": [],
+      "dependsOn": [],
+      "inputs": ["src/**", "package.json", ".eslintrc*"]
+    },
+    "type-check": { 
+      "outputs": [],
+      "dependsOn": [],
+      "inputs": ["src/**", "package.json", "tsconfig.json"]
+    },
+    "test": { 
+      "dependsOn": ["^build"], 
+      "outputs": ["coverage/**"],
+      "inputs": ["src/**", "test/**", "package.json"]
+    }
   }
 }

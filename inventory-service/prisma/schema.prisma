@@ -66,17 +66,24 @@ model User {
 }
 
 model Company {
-  id        String   @id @default(cuid())
-  tenantId  String
-  name      String
-  code      String
-  taxId     String?
-  address   String?
-  phone     String?
-  email     String?
-  isActive  Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                String   @id @default(cuid())
+  tenantId          String
+  name              String
+  code              String
+  taxId             String?  // NIPC
+  address           String?
+  phone             String?
+  email             String?
+  legalNature       String?  // Natureza Jurídica
+  socialCapital     Float?   // Capital Social
+  socialObject      String?  // Objeto Social
+  management        String?  // Gerência
+  iban              String?  // IBAN
+  contributoryStatus String? // Situação Contributiva
+  shareholdings     String?  // Participações Societárias
+  isActive          Boolean  @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 
   // Relations
   tenant     Tenant      @relation(fields: [tenantId], references: [id], onDelete: Cascade)

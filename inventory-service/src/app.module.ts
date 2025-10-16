@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaModule } from './common/prisma/prisma.module';
 import { TenantsModule } from './modules/tenants/tenants.module';
+import { CompaniesModule } from './modules/companies/companies.module';
 import { WarehousesModule } from './modules/warehouses/warehouses.module';
 import { ProductsModule } from './modules/products/products.module';
 import { CategoriesModule } from './modules/categories/categories.module';
@@ -20,6 +21,7 @@ import { IntegrationsModule } from './modules/integrations/integrations.module';
     }),
     PrismaModule,
     TenantsModule,
+    CompaniesModule,
     WarehousesModule,
     ProductsModule,
     CategoriesModule,

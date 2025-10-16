@@ -6,10 +6,10 @@ export * from './base'
 
 // Specific adapter implementations
 export * from './saft'
-export * from './phc'
-export * from './primavera'
-export * from './sage'
-export * from './mystore'
+export * from './phc/index'
+export * from './primavera/index'
+export * from './sage/index'
+export * from './mystore/index'
 
 // Adapter registry and factory
 export class AdapterRegistry {

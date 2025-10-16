@@ -4,6 +4,9 @@ import { useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { KPIGrid } from '@/components/dashboard';
+import { BarChart, PieChart, LineChart } from '@/components/charts';
+import { mockChartData } from '@/lib/mock-data';
 import { apiClient } from '@/lib/api';
 import { 
   Package, 
@@ -100,6 +103,36 @@ export default function DashboardPage() {
           <Clock className="h-4 w-4" />
           <span>Atualizado: {new Date().toLocaleTimeString('pt-PT')}</span>
         </div>
+      </div>
+
+      {/* KPI Cards */}
+      <KPIGrid className="mb-6" />
+
+      {/* Charts Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <BarChart 
+          title="Movimentos Mensais"
+          data={mockChartData.monthlyMovements}
+          height={300}
+        />
+        <PieChart 
+          title="Inventário por Categoria"
+          data={mockChartData.inventoryByCategory}
+          height={300}
+        />
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <LineChart 
+          title="Tendência de Stock"
+          data={mockChartData.stockTrend}
+          height={300}
+        />
+        <BarChart 
+          title="Top Produtos por Valor"
+          data={mockChartData.topProducts}
+          height={300}
+        />
       </div>
 
       {/* Movimentos Hoje */}

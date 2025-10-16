@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -24,6 +24,8 @@ import {
 import { QRReader } from '@/components/qr-reader';
 import { TablePreferences } from '@/components/table-preferences';
 import { WarehouseFilter } from '@/components/warehouse-filter';
+import { SearchInput, FilterPanel, FilterState } from '@/components/search';
+import { useSearch } from '@/hooks/use-search';
 
 interface Product {
   id: string;
@@ -58,11 +60,6 @@ interface ProductFormData {
 export default function InventoryPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filterType, setFilterType] = useState('all');
-  const [statusFilter, setStatusFilter] = useState('all');
-  const [selectedWarehouse, setSelectedWarehouse] = useState<string | null>('all');
-  const [selectedLocation, setSelectedLocation] = useState<string | null>('all');
   const [visibleColumns, setVisibleColumns] = useState<string[]>([
     'sku', 'name', 'type', 'costPrice', 'sellingPrice', 'stock', 'status'
   ]);
@@ -81,10 +78,172 @@ export default function InventoryPage() {
     isActive: true
   });
 
+  // Initialize filter state for FilterPanel
+  const [filterState, setFilterState] = useState<FilterState>({
+    search: '',
+    category: undefined,
+    dateRange: undefined,
+    priceRange: undefined,
+    user: undefined,
+    status: undefined,
+    tags: []
+  });
+
+  // Search and filter functionality
+  const { 
+    searchTerm, 
+    setSearchTerm, 
+    suggestions,
+    filters, 
+    updateFilter,
+    clearFilters,
+    filteredData,
+    sortBy,
+    sortOrder,
+    setSortBy,
+    setSortOrder
+  } = useSearch(products, {
+    searchFields: ['name', 'sku', 'description']
+  });
+
+  // Handle filter changes from FilterPanel
+  const handleFilterChange = (newFilters: FilterState) => {
+    setFilterState(newFilters);
+    
+    // Clear existing filters first
+    clearFilters();
+    
+    // Apply new filters using updateFilter
+    if (newFilters.category) {
+      updateFilter('type', newFilters.category);
+    }
+    
+    if (newFilters.status) {
+      updateFilter('isActive', newFilters.status === 'active');
+    }
+    
+    if (newFilters.priceRange) {
+      updateFilter('sellingPrice', {
+        min: newFilters.priceRange.min || 0,
+        max: newFilters.priceRange.max || Infinity
+      });
+    }
+    
+    if (newFilters.dateRange) {
+      updateFilter('createdAt', {
+        from: newFilters.dateRange.from,
+        to: newFilters.dateRange.to
+      });
+    }
+  };
+
+  // Convert suggestions to SearchSuggestion format
+  const searchSuggestions = useMemo(() => {
+    return suggestions.map(suggestion => ({
+      id: suggestion,
+      label: suggestion,
+      value: suggestion
+    }));
+  }, [suggestions]);
+
+  // Use filteredData directly from the hook
+  const finalFilteredProducts = filteredData;
+
   const tenantId = 'cmgsa8nz2000414ohapm9c0mx'; // Hardcoded for now
 
+  // Mock data for demonstration
+  const mockProducts: Product[] = [
+    {
+      id: '1',
+      tenantId,
+      name: 'Smartphone Samsung Galaxy S23',
+      sku: 'SAM-S23-128',
+      description: 'Smartphone Android com 128GB de armazenamento',
+      type: 'SIMPLE',
+      costPrice: 450.00,
+      sellingPrice: 699.99,
+      minStock: 5,
+      maxStock: 50,
+      isActive: true,
+      isTrackable: true,
+      tags: 'smartphone,samsung,android',
+      createdAt: '2024-01-15T10:00:00Z',
+      updatedAt: '2024-01-15T10:00:00Z'
+    },
+    {
+      id: '2',
+      tenantId,
+      name: 'Laptop Dell Inspiron 15',
+      sku: 'DELL-INS15-512',
+      description: 'Laptop com processador Intel i5 e 512GB SSD',
+      type: 'SIMPLE',
+      costPrice: 650.00,
+      sellingPrice: 899.99,
+      minStock: 3,
+      maxStock: 20,
+      isActive: true,
+      isTrackable: true,
+      tags: 'laptop,dell,computer',
+      createdAt: '2024-01-10T14:30:00Z',
+      updatedAt: '2024-01-10T14:30:00Z'
+    },
+    {
+      id: '3',
+      tenantId,
+      name: 'Headphones Sony WH-1000XM4',
+      sku: 'SONY-WH1000XM4',
+      description: 'Headphones com cancelamento de ruído',
+      type: 'SIMPLE',
+      costPrice: 180.00,
+      sellingPrice: 299.99,
+      minStock: 10,
+      maxStock: 100,
+      isActive: false,
+      isTrackable: true,
+      tags: 'headphones,sony,audio',
+      createdAt: '2024-01-05T09:15:00Z',
+      updatedAt: '2024-01-20T16:45:00Z'
+    },
+    {
+      id: '4',
+      tenantId,
+      name: 'Kit Teclado + Mouse Logitech',
+      sku: 'LOG-KM-COMBO',
+      description: 'Kit wireless com teclado e mouse',
+      type: 'BUNDLE',
+      costPrice: 45.00,
+      sellingPrice: 79.99,
+      minStock: 15,
+      maxStock: 80,
+      isActive: true,
+      isTrackable: true,
+      tags: 'keyboard,mouse,logitech,wireless',
+      createdAt: '2024-01-12T11:20:00Z',
+      updatedAt: '2024-01-12T11:20:00Z'
+    },
+    {
+      id: '5',
+      tenantId,
+      name: 'Monitor LG UltraWide 29"',
+      sku: 'LG-UW29-IPS',
+      description: 'Monitor ultrawide IPS 29 polegadas',
+      type: 'VARIABLE',
+      costPrice: 220.00,
+      sellingPrice: 349.99,
+      minStock: 2,
+      maxStock: 15,
+      isActive: true,
+      isTrackable: true,
+      tags: 'monitor,lg,ultrawide,ips',
+      createdAt: '2024-01-08T13:45:00Z',
+      updatedAt: '2024-01-18T10:30:00Z'
+    }
+  ];
+
   useEffect(() => {
-    fetchProducts();
+    // Use mock data instead of API call for demonstration
+    setProducts(mockProducts);
+    setLoading(false);
   }, []);
 
   const fetchProducts = async () => {
@@ -169,12 +328,10 @@ export default function InventoryPage() {
     if (data.sku) {
       setSearchTerm(data.sku);
     }
-    if (data.location) {
-      setSelectedLocation(data.location);
-    }
+    // Location handling would be implemented when warehouse/location features are added
   };
 
-  const tableColumns = [
+  const tableColumns = useMemo(() => [
     { key: 'sku', label: 'SKU' },
     { key: 'name', label: 'Nome' },
     { key: 'type', label: 'Tipo' },
@@ -183,7 +340,16 @@ export default function InventoryPage() {
     { key: 'stock', label: 'Stock' },
     { key: 'status', label: 'Status' },
     { key: 'actions', label: 'Ações' }
-  ];
+  ], []);
+
+  const filteredTableColumns = useMemo(() => 
+    tableColumns.filter(col => col.key !== 'actions'), 
+    [tableColumns]
+  );
+
+  const handlePreferencesChange = useCallback((visibleColumns: string[]) => {
+    setVisibleColumns(visibleColumns);
+  }, []);
 
   const openEditModal = (product: Product) => {
     setEditingProduct(product);
@@ -201,20 +367,7 @@ export default function InventoryPage() {
     setIsEditModalOpen(true);
   };
 
-  const filteredProducts = products.filter(product => {
-    const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         product.sku.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesType = filterType === 'all' || product.type === filterType;
-    const matchesStatus = statusFilter === 'all' || 
-                         (statusFilter === 'active' && product.isActive) ||
-                         (statusFilter === 'inactive' && !product.isActive);
-    
-    // Filtros de armazém e localização seriam aplicados aqui
-    // const matchesWarehouse = !selectedWarehouse || product.warehouseId === selectedWarehouse;
-    // const matchesLocation = !selectedLocation || product.location === selectedLocation;
-    
-    return matchesSearch && matchesType && matchesStatus;
-  });
+  // Using filteredData from useSearch hook directly
 
   const getStatusBadge = (isActive: boolean) => {
     return isActive ? 
@@ -389,67 +542,47 @@ export default function InventoryPage() {
         </div>
       </div>
 
-      {/* Filters */}
+      {/* Search and Filters */}
       <Card>
         <CardContent className="pt-6">
-          <div className="flex flex-col sm:flex-row gap-4 mb-6">
+          <div className="flex flex-col lg:flex-row gap-4 mb-6">
             <div className="flex-1">
-              <Input
-                placeholder="Buscar por nome ou SKU..."
+              <SearchInput
+                placeholder="Buscar por nome, SKU ou descrição..."
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="max-w-sm"
+                onChange={setSearchTerm}
+                suggestions={searchSuggestions}
               />
             </div>
             
-            <WarehouseFilter
-              onWarehouseChange={setSelectedWarehouse}
-              onLocationChange={setSelectedLocation}
-              selectedWarehouse={selectedWarehouse}
-              selectedLocation={selectedLocation}
+            <FilterPanel
+              filters={filterState}
+              onFiltersChange={handleFilterChange}
+              categories={[
+                { id: 'SIMPLE', label: 'Simples', value: 'SIMPLE' },
+                { id: 'VARIABLE', label: 'Variável', value: 'VARIABLE' },
+                { id: 'BUNDLE', label: 'Bundle', value: 'BUNDLE' }
+              ]}
+              statuses={[
+                { id: 'active', label: 'Ativo', value: 'active' },
+                { id: 'inactive', label: 'Inativo', value: 'inactive' }
+              ]}
+              className="w-auto"
             />
           </div>
 
           <div className="flex flex-wrap items-center gap-2 mb-4">
-            <Select value={filterType} onValueChange={setFilterType}>
-              <SelectTrigger className="w-40">
-                <SelectValue placeholder="Tipo" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Todos os tipos</SelectItem>
-                <SelectItem value="SIMPLE">Simples</SelectItem>
-                <SelectItem value="VARIABLE">Variável</SelectItem>
-                <SelectItem value="BUNDLE">Bundle</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-32">
-                <SelectValue placeholder="Status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Todos</SelectItem>
-                <SelectItem value="active">Ativo</SelectItem>
-                <SelectItem value="inactive">Inativo</SelectItem>
-              </SelectContent>
-            </Select>
-
             <QRReader onScan={handleQRScan} />
             
             <TablePreferences
               tableId="products-table"
-              columns={tableColumns.filter(col => col.key !== 'actions')}
-              onPreferencesChange={setVisibleColumns}
+              columns={filteredTableColumns}
+              onPreferencesChange={handlePreferencesChange}
             />
 
             <Button variant="outline" size="sm">
               <Download className="h-4 w-4 mr-2" />
               Exportar
-            </Button>
-
-            <Button variant="outline" size="sm">
-              <Upload className="h-4 w-4 mr-2" />
-              Importar CSV
             </Button>
           </div>
         </CardContent>
@@ -458,70 +591,61 @@ export default function InventoryPage() {
       {/* Products Table */}
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center">
-            <Package className="h-5 w-5 mr-2" />
-            Lista de Produtos ({filteredProducts.length})
+          <CardTitle className="flex items-center gap-2">
+            <Package className="h-5 w-5" />
+            Produtos ({finalFilteredProducts.length})
           </CardTitle>
+          <CardDescription>
+            Lista de produtos no inventário
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                {visibleColumns.includes('sku') && <TableHead>SKU</TableHead>}
-                {visibleColumns.includes('name') && <TableHead>Nome</TableHead>}
-                {visibleColumns.includes('type') && <TableHead>Tipo</TableHead>}
-                {visibleColumns.includes('costPrice') && <TableHead>Preço Custo</TableHead>}
-                {visibleColumns.includes('sellingPrice') && <TableHead>Preço Venda</TableHead>}
-                {visibleColumns.includes('stock') && <TableHead>Estoque</TableHead>}
-                {visibleColumns.includes('status') && <TableHead>Status</TableHead>}
-                <TableHead className="text-right">Ações</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredProducts.length === 0 ? (
+          {loading ? (
+            <div className="flex items-center justify-center py-8">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+            </div>
+          ) : (
+            <Table>
+              <TableHeader>
                 <TableRow>
-                  <TableCell colSpan={8} className="text-center py-8 text-gray-500">
-                    <Package className="h-8 w-8 mx-auto mb-2 opacity-50" />
-                    <p>Nenhum produto encontrado</p>
-                  </TableCell>
+                  {visibleColumns.includes('sku') && <TableHead>SKU</TableHead>}
+                  {visibleColumns.includes('name') && <TableHead>Nome</TableHead>}
+                  {visibleColumns.includes('type') && <TableHead>Tipo</TableHead>}
+                  {visibleColumns.includes('costPrice') && <TableHead>Preço Custo</TableHead>}
+                  {visibleColumns.includes('sellingPrice') && <TableHead>Preço Venda</TableHead>}
+                  {visibleColumns.includes('status') && <TableHead>Status</TableHead>}
+                  <TableHead className="text-right">Ações</TableHead>
                 </TableRow>
-              ) : (
-                filteredProducts.map((product) => (
+              </TableHeader>
+              <TableBody>
+                {finalFilteredProducts.map((product) => (
                   <TableRow key={product.id}>
                     {visibleColumns.includes('sku') && (
                       <TableCell className="font-mono text-sm">{product.sku}</TableCell>
                     )}
                     {visibleColumns.includes('name') && (
-                      <TableCell>
-                        <div>
-                          <div className="font-medium">{product.name}</div>
-                          {product.description && (
-                            <div className="text-sm text-gray-500">{product.description}</div>
-                          )}
-                        </div>
-                      </TableCell>
+                      <TableCell className="font-medium">{product.name}</TableCell>
                     )}
                     {visibleColumns.includes('type') && (
-                      <TableCell>{product.type}</TableCell>
+                      <TableCell>
+                        <Badge variant="outline">{product.type}</Badge>
+                      </TableCell>
                     )}
                     {visibleColumns.includes('costPrice') && (
-                      <TableCell>{product.costPrice ? `€${product.costPrice.toFixed(2)}` : '-'}</TableCell>
+                      <TableCell>
+                        {product.costPrice ? `€${product.costPrice.toFixed(2)}` : '-'}
+                      </TableCell>
                     )}
                     {visibleColumns.includes('sellingPrice') && (
-                      <TableCell>{product.sellingPrice ? `€${product.sellingPrice.toFixed(2)}` : '-'}</TableCell>
-                    )}
-                    {visibleColumns.includes('stock') && (
                       <TableCell>
-                        <span className="text-sm text-gray-600">
-                          {product.minStock && product.maxStock ? `${product.minStock} - ${product.maxStock}` : '-'}
-                        </span>
+                        {product.sellingPrice ? `€${product.sellingPrice.toFixed(2)}` : '-'}
                       </TableCell>
                     )}
                     {visibleColumns.includes('status') && (
                       <TableCell>{getStatusBadge(product.isActive)}</TableCell>
                     )}
                     <TableCell className="text-right">
-                      <div className="flex items-center justify-end space-x-2">
+                      <div className="flex items-center justify-end gap-2">
                         <Button
                           variant="ghost"
                           size="sm"
@@ -538,10 +662,10 @@ export default function InventoryPage() {
                       </div>
                     </TableCell>
                   </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
+                ))}
+              </TableBody>
+            </Table>
+          )}
         </CardContent>
       </Card>
 
