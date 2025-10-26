@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import { SafeImage } from '@/components/ui/SafeImage';
 import { HTMLAttributes } from 'react';
 import { cn, getInitials } from '@/lib/utils';
 
@@ -27,10 +27,11 @@ export function Avatar({ src, alt, name, size = 'md', className, ...props }: Ava
       {...props}
     >
       {src ? (
-        <Image
+        <SafeImage
           src={src}
           alt={alt || name || 'Avatar'}
           fill
+          sizes="(max-width: 768px) 40px, 48px"
           className="object-cover"
         />
       ) : (

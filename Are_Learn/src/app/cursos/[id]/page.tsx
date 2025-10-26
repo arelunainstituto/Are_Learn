@@ -1,4 +1,5 @@
-import Image from 'next/image';
+import { SafeImage } from '@/components/ui/SafeImage';
+import { SimpleVideoPlayer } from '@/components/curso/SimpleVideoPlayer';
 import { Clock, BookOpen, BarChart3, Award, Download, CheckCircle, PlayCircle } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
@@ -7,66 +8,129 @@ import { ProgressBar } from '@/components/ui/ProgressBar';
 import { Avatar } from '@/components/ui/Avatar';
 import { formatDuration } from '@/lib/utils';
 
-// Mock data - substituir por dados reais
+// Mock data com vídeos reais do YouTube
 const curso = {
   id: '1',
-  titulo: 'Implantodontia Avançada',
-  descricao: `Domine as técnicas mais avançadas de implantodontia com este curso completo. 
+  titulo: 'Fundamentos de Implantodontia',
+  descricao: `Domine os fundamentos da implantodontia moderna com este curso completo. 
   
-  Aprenda com casos reais, demonstrações práticas e o conhecimento de um dos maiores especialistas da área. Este curso aborda desde os fundamentos até as técnicas mais complexas de reabilitação oral com implantes.
+  Aprenda com casos reais, demonstrações práticas e o conhecimento de um dos maiores especialistas da área. Este curso aborda desde os conceitos básicos até as técnicas fundamentais de reabilitação oral com implantes.
   
-  Você aprenderá sobre planejamento cirúrgico, técnicas de instalação, enxertia óssea, próteses sobre implantes e muito mais. Ideal para dentistas que desejam se especializar ou atualizar seus conhecimentos em implantodontia.`,
-  thumbnail: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=1200&q=80',
-  banner: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=1200&q=80',
-  nivel: 'Avançado',
+  Você aprenderá sobre anatomia óssea, planejamento cirúrgico, técnicas de instalação, materiais e superfícies, e muito mais. Ideal para dentistas que desejam se especializar ou atualizar seus conhecimentos em implantodontia.`,
+  thumbnail: 'https://img.youtube.com/vi/9bZkp7q19f0/maxresdefault.jpg',
+  banner: 'https://img.youtube.com/vi/9bZkp7q19f0/maxresdefault.jpg',
+  nivel: 'Iniciante',
   duracao_total: 480,
-  total_modulos: 8,
-  total_aulas: 42,
-  tags: ['implantes', 'cirurgia', 'avançado'],
+  total_modulos: 6,
+  total_aulas: 24,
+  tags: ['implantodontia', 'fundamentos', 'cirurgia'],
   instrutor: {
-    nome: 'Dr. Carlos Mendes',
-    bio: 'Especialista em Implantodontia com mais de 20 anos de experiência. Mestre e Doutor pela USP, coordenador de cursos de especialização.',
-    avatar: '',
+    nome: 'Dr. Carlos Eduardo',
+    bio: 'Especialista em Implantodontia com 15 anos de experiência. Mestre e Doutor pela USP, coordenador de cursos de especialização.',
+    avatar: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=150&h=150&fit=crop&crop=face',
     especialidade: 'Implantodontia',
-    total_cursos: 5,
-    total_alunos: 1250,
+    total_cursos: 8,
+    total_alunos: 2500,
   },
   categoria: 'Implantodontia',
   modulos: [
     {
       id: '1',
-      titulo: 'Fundamentos da Implantodontia',
-      descricao: 'Introdução aos conceitos fundamentais',
+      titulo: 'Introdução à Implantodontia',
+      descricao: 'Conceitos fundamentais e histórico',
       ordem: 1,
       duracao_total: 60,
       aulas: [
-        { id: '1', titulo: 'História dos Implantes Dentários', duracao: 15, disponivel_preview: true },
-        { id: '2', titulo: 'Anatomia Óssea Aplicada', duracao: 20, disponivel_preview: true },
-        { id: '3', titulo: 'Materiais e Superfícies', duracao: 25, disponivel_preview: false },
+        { 
+          id: '1', 
+          titulo: 'História dos Implantes Dentários', 
+          duracao: 15, 
+          disponivel_preview: true,
+          video_id: '9bZkp7q19f0',
+          youtube_url: 'https://www.youtube.com/watch?v=9bZkp7q19f0'
+        },
+        { 
+          id: '2', 
+          titulo: 'Anatomia Óssea Aplicada', 
+          duracao: 20, 
+          disponivel_preview: true,
+          video_id: 'L_jWHffIx5E',
+          youtube_url: 'https://www.youtube.com/watch?v=L_jWHffIx5E'
+        },
+        { 
+          id: '3', 
+          titulo: 'Materiais e Superfícies', 
+          duracao: 25, 
+          disponivel_preview: false,
+          video_id: 'ZXsQAXx_ao0',
+          youtube_url: 'https://www.youtube.com/watch?v=ZXsQAXx_ao0'
+        },
       ],
     },
     {
       id: '2',
-      titulo: 'Planejamento Cirúrgico',
+      titulo: 'Planejamento e Diagnóstico',
       descricao: 'Técnicas de planejamento e diagnóstico',
       ordem: 2,
       duracao_total: 90,
       aulas: [
-        { id: '4', titulo: 'Exames de Imagem', duracao: 30, disponivel_preview: false },
-        { id: '5', titulo: 'Planejamento Digital', duracao: 35, disponivel_preview: false },
-        { id: '6', titulo: 'Guias Cirúrgicos', duracao: 25, disponivel_preview: false },
+        { 
+          id: '4', 
+          titulo: 'Exames de Imagem', 
+          duracao: 30, 
+          disponivel_preview: false,
+          video_id: 'dQw4w9WgXcQ',
+          youtube_url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+        },
+        { 
+          id: '5', 
+          titulo: 'Planejamento Digital', 
+          duracao: 35, 
+          disponivel_preview: false,
+          video_id: '9bZkp7q19f0',
+          youtube_url: 'https://www.youtube.com/watch?v=9bZkp7q19f0'
+        },
+        { 
+          id: '6', 
+          titulo: 'Guias Cirúrgicos', 
+          duracao: 25, 
+          disponivel_preview: false,
+          video_id: 'M7lc1UVf-VE',
+          youtube_url: 'https://www.youtube.com/watch?v=M7lc1UVf-VE'
+        },
       ],
     },
     {
       id: '3',
-      titulo: 'Técnicas Cirúrgicas',
-      descricao: 'Procedimentos cirúrgicos passo a passo',
+      titulo: 'Técnicas Cirúrgicas Básicas',
+      descricao: 'Procedimentos cirúrgicos fundamentais',
       ordem: 3,
       duracao_total: 120,
       aulas: [
-        { id: '7', titulo: 'Protocolo Cirúrgico Básico', duracao: 40, disponivel_preview: false },
-        { id: '8', titulo: 'Técnicas Avançadas', duracao: 45, disponivel_preview: false },
-        { id: '9', titulo: 'Complicações e Soluções', duracao: 35, disponivel_preview: false },
+        { 
+          id: '7', 
+          titulo: 'Protocolo Cirúrgico Básico', 
+          duracao: 40, 
+          disponivel_preview: false,
+          video_id: 'dQw4w9WgXcQ',
+          youtube_url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+        },
+        { 
+          id: '8', 
+          titulo: 'Técnicas de Instalação', 
+          duracao: 45, 
+          disponivel_preview: false,
+          video_id: '9bZkp7q19f0',
+          youtube_url: 'https://www.youtube.com/watch?v=9bZkp7q19f0'
+        },
+        { 
+          id: '9', 
+          titulo: 'Complicações e Soluções', 
+          duracao: 35, 
+          disponivel_preview: false,
+          video_id: 'M7lc1UVf-VE',
+          youtube_url: 'https://www.youtube.com/watch?v=M7lc1UVf-VE'
+        },
       ],
     },
   ],
@@ -84,10 +148,11 @@ export default function CursoDetalhePage() {
     <div className="min-h-screen bg-gray-50">
       {/* Hero com Banner */}
       <div className="relative h-[400px] bg-gradient-to-r from-gray-900 to-gray-800">
-        <Image
+        <SafeImage
           src={curso.banner}
           alt={curso.titulo}
           fill
+          sizes="100vw"
           className="object-cover opacity-30"
         />
         <div className="absolute inset-0 container-custom flex items-center">
@@ -132,6 +197,22 @@ export default function CursoDetalhePage() {
                     <p key={index}>{paragraph}</p>
                   ))}
                 </div>
+              </CardContent>
+            </Card>
+
+            {/* Vídeo Principal */}
+            <Card className="mb-8">
+              <CardContent className="p-6">
+                <h2 className="text-2xl font-brand font-bold text-grey-900 mb-4">
+                  Vídeo de Apresentação
+                </h2>
+                <SimpleVideoPlayer
+                  videoId={curso.modulos[0].aulas[0].video_id}
+                  title={curso.modulos[0].aulas[0].titulo}
+                  isPreview={curso.modulos[0].aulas[0].disponivel_preview}
+                  isLocked={!curso.modulos[0].aulas[0].disponivel_preview}
+                  className="w-full"
+                />
               </CardContent>
             </Card>
 

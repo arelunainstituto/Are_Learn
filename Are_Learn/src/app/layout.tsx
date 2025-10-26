@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { Inter, Plus_Jakarta_Sans, Playfair_Display } from 'next/font/google';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import { TenantProvider, TenantLoadingFallback } from '@/contexts/TenantContext';
+import { UsersProvider } from '@/contexts/UsersContext';
 import '@/styles/globals.css';
 
 const inter = Inter({
@@ -34,15 +36,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR" className={`${inter.variable} ${plusJakarta.variable} ${playfairDisplay.variable}`}>
-      <body className="font-sans">
-        <div className="flex flex-col min-h-screen">
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </div>
-      </body>
-    </html>
+        <html lang="pt-BR" className={`${inter.variable} ${plusJakarta.variable} ${playfairDisplay.variable}`}>
+          <body className="font-sans">
+            <TenantProvider>
+              <UsersProvider>
+                <TenantLoadingFallback>
+                  <div className="flex flex-col min-h-screen">
+                    <Header />
+                    <main className="flex-1">{children}</main>
+                    <Footer />
+                  </div>
+                </TenantLoadingFallback>
+              </UsersProvider>
+            </TenantProvider>
+          </body>
+        </html>
   );
 }
 

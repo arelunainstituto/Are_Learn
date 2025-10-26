@@ -65,6 +65,30 @@ export function Header() {
               <span>Cursos</span>
             </Link>
             
+            <Link
+              href="/instrutores"
+              className="flex items-center gap-2 text-grey-700 hover:text-gold-500 transition-colors font-medium"
+            >
+              <Award size={20} />
+              <span>Instrutores</span>
+            </Link>
+            
+                <Link
+                  href="/colaboradores"
+                  className="flex items-center gap-2 text-grey-700 hover:text-gold-500 transition-colors font-medium"
+                >
+                  <BarChart3 size={20} />
+                  <span>Equipe</span>
+                </Link>
+                
+                <Link
+                  href="/treinamento-corporativo"
+                  className="flex items-center gap-2 text-grey-700 hover:text-gold-500 transition-colors font-medium"
+                >
+                  <Award size={20} />
+                  <span>Treinamento</span>
+                </Link>
+            
             {isAuthenticated && (
               <>
                 <Link
@@ -139,6 +163,33 @@ export function Header() {
               <BookOpen size={20} />
               <span className="font-medium">Cursos</span>
             </Link>
+            
+            <Link
+              href="/instrutores"
+              className="flex items-center gap-3 text-gray-700 hover:text-primary-600 transition-colors py-2"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <Award size={20} />
+              <span className="font-medium">Instrutores</span>
+            </Link>
+            
+                <Link
+                  href="/colaboradores"
+                  className="flex items-center gap-3 text-gray-700 hover:text-primary-600 transition-colors py-2"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <BarChart3 size={20} />
+                  <span className="font-medium">Equipe</span>
+                </Link>
+                
+                <Link
+                  href="/treinamento-corporativo"
+                  className="flex items-center gap-3 text-gray-700 hover:text-primary-600 transition-colors py-2"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <Award size={20} />
+                  <span className="font-medium">Treinamento</span>
+                </Link>
             
             {isAuthenticated ? (
               <>

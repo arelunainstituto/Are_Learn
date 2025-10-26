@@ -4,24 +4,24 @@ import { Button } from '@/components/ui/Button';
 import { CursoCard } from '@/components/curso/CursoCard';
 import { Curso } from '@/types';
 
-// Mock data - substituir por dados reais do Supabase
+// Mock data com vídeos reais do YouTube
 const cursosDestaque: Curso[] = [
   {
     id: '1',
-    titulo: 'Implantodontia Avançada',
-    descricao: 'Domine as técnicas mais avançadas de implantodontia com casos reais e demonstrações práticas.',
-    descricao_curta: 'Técnicas avançadas de implantodontia',
-    thumbnail: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=800&q=80',
+    titulo: 'Fundamentos de Implantodontia',
+    descricao: 'Domine os fundamentos da implantodontia moderna com casos reais e demonstrações práticas.',
+    descricao_curta: 'Fundamentos da implantodontia moderna',
+    thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
     banner: '',
     instrutor_id: '1',
     instrutor: {
       id: '1',
-      nome: 'Dr. Carlos Mendes',
-      bio: '',
-      avatar: '',
+      nome: 'Dr. Carlos Eduardo',
+      bio: 'Especialista em Implantodontia com 15 anos de experiência',
+      avatar: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=150&h=150&fit=crop&crop=face',
       especialidade: 'Implantodontia',
-      total_cursos: 5,
-      total_alunos: 1250,
+      total_cursos: 8,
+      total_alunos: 2500,
     },
     categoria_id: '1',
     categoria: {
@@ -31,22 +31,22 @@ const cursosDestaque: Curso[] = [
       descricao: '',
       cor: '#3B82F6',
     },
-    nivel: 'avancado',
+    nivel: 'iniciante',
     duracao_total: 480,
-    total_modulos: 8,
-    total_aulas: 42,
+    total_modulos: 6,
+    total_aulas: 24,
     destaque: true,
     publicado: true,
-    tags: ['implantes', 'cirurgia', 'avançado'],
+    tags: ['implantodontia', 'fundamentos', 'cirurgia'],
     criado_em: '2024-01-01',
     atualizado_em: '2024-01-01',
   },
   {
     id: '2',
-    titulo: 'Gestão de Clínicas Odontológicas',
-    descricao: 'Aprenda a gerir sua clínica de forma eficiente e lucrativa.',
-    descricao_curta: 'Gestão eficiente para clínicas',
-    thumbnail: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80',
+    titulo: 'Ortodontia Digital Avançada',
+    descricao: 'Técnicas avançadas de ortodontia digital, incluindo planejamento 3D e alinhadores transparentes.',
+    descricao_curta: 'Ortodontia digital moderna',
+    thumbnail: 'https://img.youtube.com/vi/jNQXAC9IVRw/maxresdefault.jpg',
     banner: '',
     instrutor_id: '2',
     instrutor: {
@@ -134,6 +134,12 @@ export default function HomePage() {
                 <Button size="lg" className="bg-white text-gold-600 hover:bg-grey-100 shadow-xl">
                   <Play className="mr-2" size={20} />
                   Explorar Cursos
+                </Button>
+              </Link>
+              <Link href="/demo-video">
+                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+                  <Play className="mr-2" size={20} />
+                  Demo Vídeo
                 </Button>
               </Link>
               <Link href="/sobre">
