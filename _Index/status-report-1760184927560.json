@@ -1,0 +1,24 @@
+{
+  "timestamp": "2025-10-11T12:15:27.559Z",
+  "root": "/Users/dr.saraiva/Documents/TRAe-Projects",
+  "index": {
+    "total": 0,
+    "ok": 0,
+    "broken": 0,
+    "brokenList": []
+  },
+  "meta": {
+    "root": {
+      "base": "/Users/dr.saraiva/Documents/TRAe-Projects",
+      "present": 5,
+      "missing": 0,
+      "details": []
+    },
+    "inbox": {
+      "base": "/Users/dr.saraiva/Documents/TRAe-Projects/_Inbox",
+      "present": 0,
+      "missing": 0,
+      "details": []
+    }
+  }
+}

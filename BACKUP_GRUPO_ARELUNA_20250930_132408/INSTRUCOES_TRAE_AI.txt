@@ -1,0 +1,6 @@
+# Instruções para Trae.ai
+1) Ler primeiro: escopo_geral.txt
+2) Cada empresa tem um TXT raiz com CAE e foco ERP
+3) Departamentos têm um descricao.txt para detalhar processos
+4) Stack: Node (NestJS + Prisma + PostgreSQL), Next.js/Tailwind, Azure AD SSO
+5) Padrões: multi-tenant, RBAC, auditoria, OpenAPI, testes, observabilidade

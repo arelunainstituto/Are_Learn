@@ -1,0 +1,95 @@
+Briefing Técnico — Projetos do Grupo AreLuna (para colar no ChatGPT)
+
+Contexto Geral
+- Objetivo: organizar, padronizar e evoluir apps e serviços do ERP AreLuna.
+- Stack preferida: Node.js (NestJS + Supabase + PostgreSQL), Next.js/React + Tailwind.
+- Ambiente local padronizado: serviços em localhost portas 3000-3004.
+- Como iniciar tudo local: no raiz do repo, executar `npm run dev:all`.
+
+Ambiente e Endereços
+- Frontend (Next.js): http://localhost:3000/
+- QR-Code Generator (Express + SQLite): http://localhost:3001/
+- Prostoral LAB (Express): http://localhost:3002/
+- Leitor-De-Faturas (Express): http://localhost:3003/
+- Leitor de Arquivos SAF-T (TS/Express): http://localhost:3004/
+
+Projetos Ativos
+1) frontend-grupo-areluna (Next.js)
+- Diretório: Grupo AreLuna/frontend-grupo-areluna
+- Propósito: interface web unificada para módulos do ERP.
+- Stack: Next.js 15, React 19, Tailwind (em uso no projeto), ESLint.
+- Comando dev: `npm run dev` (aceita PORT, default 3000)
+- URL: http://localhost:3000/
+- Objetivos: criar navegação, páginas e integração com APIs internas; futuro: auth com Supabase.
+- Observações: usa Turbopack; precisa consolidar UI compartilhada (packages/ui).
+
+2) QR-Code-Generator (Express + SQLite)
+- Diretório: Grupo AreLuna/QR-Code-Generator
+- Propósito: geração e gestão de QR Codes para inventário patrimonial.
+- Stack: Node.js/Express, Helmet, CORS, SQLite3, morgan.
+- Comando dev: `npm run dev`
+- URL: http://localhost:3001/
+- Endpoints exemplo: `GET /api/qr-items`, `GET /api/qr-items/:qrCode`, `POST /api/qr-items`
+- Objetivos: CRUD de itens, geração de QR, integração futura com ERP e Supabase.
+
+3) Leitor-De-Faturas (Express)
+- Diretório: Grupo AreLuna/Leitor-De-Faturas
+- Propósito: serviço local para leitura e decodificação de QR em faturas/imagens.
+- Stack: Node.js/Express, multer, jsQR, jimp, cors, morgan, fs-extra.
+- Comando dev: `npm run dev`
+- URL: http://localhost:3003/
+- Endpoints: `GET /health`, upload e leitura de imagens (rotas definidas no server.js).
+- Objetivos: pipeline de leitura robusto, integração com ERP e armazenamento.
+
+4) Prostoral LAB app (Express)
+- Diretório: Grupo AreLuna/Prostoral LAB app/Prostoral LAB app
+- Propósito: ERP para laboratório de próteses (ProStoral), páginas estáticas e APIs auxiliares.
+- Stack: Node.js/Express, Helmet, CORS dinâmico, morgan; páginas HTML/CSS.
+- Comando dev: `npm run dev`
+- URL: http://localhost:3002/
+- Observações: erro atual de CDN do Chart.js (SyntaxError). Sugerida correção: usar UMD pinado `https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js` ou ESM com `type="module"`.
+
+5) Leitor de Arquivos SAF-T (TypeScript/Express)
+- Diretório: Grupo AreLuna/leitor-de-arquivos-saft
+- Propósito: importar, validar e consolidar dados de arquivos SAF-T (fiscal/PT).
+- Stack: Node.js/Express, TypeScript, zod, multer, fast-xml-parser, cron, Supabase client.
+- Comando dev: `npm run dev` (tsx --watch)
+- URL: http://localhost:3004/
+- Endpoints: `/health`, `/api/saft/upload`, `/api/vat/consolidated/:ano`.
+- Observações: loga "⚠️ Supabase not configured". Precisa configurar variáveis de ambiente e chaves do Supabase.
+
+Monorepo Parcial (PROJETOS-TECNOLOGICOS)
+- Diretório: Grupo AreLuna/PROJETOS-TECNOLOGICOS
+- Conteúdo: apps/, packages/, prisma/; possui turbo.json com pipelines (build, dev, lint, type-check, db).
+- Objetivo: integrar gradualmente à workspace pnpm/turbo do repo raiz.
+
+Como Executar Localmente
+- Orquestrador: `npm run dev:all` (sobe todos os serviços com PORT fixa 3000-3004)
+- Individual: entrar em cada diretório e rodar `npm run dev`
+- Requisitos de Node: alguns projetos exigem Node >=18; outros >=16.
+
+Pendências Conhecidas / Ajustes Sugeridos
+- Prostoral LAB: corrigir inclusão do Chart.js (UMD pinado ou ESM com type="module").
+- SAF-T: configurar Supabase (URL, KEY) e conectar a um projeto; definir tabela/estruturas.
+- Padronização: criar `packages/ui`, `packages/schemas` e base `tsconfig.base.json` compartilhado.
+- Autenticação: integrar Supabase Auth (Next.js + APIs), RBAC por empresa/unidade.
+- Dados: definir PostgreSQL (Supabase) para persistência central do ERP; migrar do SQLite local.
+- Deploy: consolidar para Azure Container Apps ou Vercel (frontend) + Supabase (DB/Auth).
+
+Pedidos ao ChatGPT (o que queremos de ajuda)
+- Propor arquitetura modular (apps e packages) com pnpm/Turborepo.
+- Padronizar scripts e PORTs; gerar docker-compose para ambiente local (opcional).
+- Especificar esquemas (Zod + Prisma) para módulos ERP (pacientes, inventário, faturação, RH).
+- Planejar integração de autenticação (Supabase) e autorização por inquilino (tenant).
+- Sugerir correções no Prostoral LAB para o Chart.js e otimização de assets.
+- Definir plano de migração de dados do QR-Code-Generator de SQLite para PostgreSQL.
+- Criar plano de testes (unitários/integração) com Vitest/Jest e rotas principais.
+
+Diretórios Importantes
+- Raiz: scripts/serve-local.js (orquestrador), turbo.json, pnpm-workspace.yaml.
+- Grupo AreLuna/* (cada projeto listado acima).
+- _Index/local-addresses.md (documentação de endereços locais).
+
+Notas Finais
+- Todos os serviços já sobem em localhost nas portas padronizadas; erros de CDN do Prostoral precisam ajuste.
+- Há preferência por Node/NestJS/Supabase/PostgreSQL e Next.js/Tailwind no front.

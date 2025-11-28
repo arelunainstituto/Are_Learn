@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestão de Empréstimos</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header__content">
+                <div class="header__logo">
+                    <i class="fas fa-university"></i>
+                    <span>LendingSystem</span>
+                </div>
+                <nav class="header__nav">
+                    <button class="nav-btn active" data-section="dashboard">
+                        <i class="fas fa-chart-line"></i>
+                        <span data-i18n="nav.dashboard">Dashboard</span>
+                    </button>
+                    <button class="nav-btn" data-section="emprestimos">
+                        <i class="fas fa-file-contract"></i>
+                        <span data-i18n="nav.loans">Empréstimos</span>
+                    </button>
+                    <button class="nav-btn" data-section="pagamentos">
+                        <i class="fas fa-credit-card"></i>
+                        <span data-i18n="nav.payments">Pagamentos</span>
+                    </button>
+                    <button class="nav-btn" data-section="relatorios">
+                        <i class="fas fa-file-export"></i>
+                        <span data-i18n="nav.reports">Relatórios</span>
+                    </button>
+                </nav>
+                <div class="header__actions">
+                    <div class="language-selector">
+                        <select id="language-select" class="form-control form-control--sm">
+                            <option value="pt">🇵🇹 Português</option>
+                            <option value="en">🇬🇧 English</option>
+                            <option value="de">🇩🇪 Deutsch</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Alertas -->
+    <div id="alerts-container" class="alerts-container"></div>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="section active">
+                <div class="section__header">
+                    <h1 data-i18n="dashboard.title">Dashboard</h1>
+                    <div class="filters">
+                        <select id="period-filter" class="form-control">
+                            <option value="all" data-i18n="dashboard.allPeriods">Todos os períodos</option>
+                            <option value="30" data-i18n="dashboard.last30Days">Últimos 30 dias</option>
+                            <option value="90" data-i18n="dashboard.last90Days">Últimos 90 dias</option>
+                            <option value="365" data-i18n="dashboard.lastYear">Último ano</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- KPI Cards -->
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-card__icon">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <div class="kpi-card__content">
+                            <div class="kpi-card__value" id="carteira-ativa-valor">€0</div>
+                            <div class="kpi-card__label" data-i18n="dashboard.activePortfolio">Carteira Ativa</div>
+                            <div class="kpi-card__count" id="carteira-ativa-count">0 <span data-i18n="dashboard.loans">empréstimos</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="kpi-card">
+                        <div class="kpi-card__icon warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="kpi-card__content">
+                            <div class="kpi-card__value" id="taxa-inadimplencia">0%</div>
+                            <div class="kpi-card__label" data-i18n="dashboard.defaultRate">Taxa Inadimplência</div>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-card__icon success">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <div class="kpi-card__content">
+                            <div class="kpi-card__value" id="recebido-mes">€0</div>
+                            <div class="kpi-card__label" data-i18n="dashboard.receivedThisMonth">Recebido Este Mês</div>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-card__icon info">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="kpi-card__content">
+                            <div class="kpi-card__value" id="previsao-30d">€0</div>
+                            <div class="kpi-card__label" data-i18n="dashboard.forecast30d">Previsão 30 dias</div>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-card__icon primary">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                        <div class="kpi-card__content">
+                            <div class="kpi-card__value" id="roi-estimado">0%</div>
+                            <div class="kpi-card__label" data-i18n="dashboard.estimatedROI">ROI Estimado</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="charts-grid">
+                    <div class="chart-container">
+                        <div class="card">
+                            <div class="card__header">
+                                <h3 data-i18n="dashboard.receivablesEvolution">Evolução de Recebimentos</h3>
+                            </div>
+                            <div class="card__body">
+                                <div class="chart-wrapper" style="position: relative; height: 300px;">
+                                    <canvas id="recebimentos-chart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="card">
+                            <div class="card__header">
+                                <h3 data-i18n="dashboard.riskDistribution">Distribuição por Score de Risco</h3>
+                            </div>
+                            <div class="card__body">
+                                <div class="chart-wrapper" style="position: relative; height: 300px;">
+                                    <canvas id="risco-chart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Loans Table -->
+                <div class="table-section">
+                    <div class="card">
+                        <div class="card__header">
+                            <h3 data-i18n="dashboard.loansTable">Empréstimos</h3>
+                            <div class="table-controls">
+                                <input type="text" id="search-loans" class="form-control search-input" data-i18n-placeholder="dashboard.searchPlaceholder" placeholder="Buscar por cliente...">
+                                <div class="filter-group">
+                                    <select id="status-filter" class="form-control">
+                                        <option value="" data-i18n="dashboard.allStatuses">Todos os status</option>
+                                        <option value="ativo" data-i18n="dashboard.active">Ativo</option>
+                                        <option value="liquidado" data-i18n="dashboard.settled">Liquidado</option>
+                                        <option value="em_incumprimento" data-i18n="dashboard.defaulting">Em Incumprimento</option>
+                                    </select>
+                                    <select id="risco-filter" class="form-control">
+                                        <option value="" data-i18n="dashboard.allRisks">Todos os riscos</option>
+                                        <option value="A">Score A</option>
+                                        <option value="B">Score B</option>
+                                        <option value="C">Score C</option>
+                                        <option value="D">Score D</option>
+                                        <option value="E">Score E</option>
+                                    </select>
+                                    <select id="atraso-filter" class="form-control">
+                                        <option value="" data-i18n="dashboard.allDelays">Todos</option>
+                                        <option value="0" data-i18n="dashboard.noDelay">Sem atraso</option>
+                                        <option value="1-30">1-30 dias</option>
+                                        <option value="31-60">31-60 dias</option>
+                                        <option value="61+">61+ dias</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card__body">
+                            <div class="table-container">
+                                <table id="loans-table" class="table">
+                                    <thead>
+                                        <tr>
+                                            <th data-sort="id" data-i18n="common.id">ID</th>
+                                            <th data-sort="cliente" data-i18n="loans.client">Cliente</th>
+                                            <th data-sort="segmento" data-i18n="common.segment">Segmento</th>
+                                            <th data-sort="montante" data-i18n="loans.amount">Montante</th>
+                                            <th data-sort="taxa_anual" data-i18n="loans.rate">Taxa</th>
+                                            <th data-sort="score_risco" data-i18n="common.risk">Risco</th>
+                                            <th data-sort="status" data-i18n="loans.status">Status</th>
+                                            <th data-i18n="loans.delay">Atraso</th>
+                                            <th data-i18n="common.actions">Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="loans-table-body">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Loan Management Section -->
+            <section id="loans" class="section">
+                <div class="section__header">
+                    <h1 data-i18n="loans.title">Gestão de Empréstimos</h1>
+                    <button class="btn btn--primary" id="new-loan-btn">
+                        <i class="fas fa-plus"></i>
+                        <span data-i18n="loans.newLoan">Novo Empréstimo</span>
+                    </button>
+                </div>
+                
+                <div class="card">
+                    <div class="card__body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th data-i18n="common.id">ID</th>
+                                        <th data-i18n="loans.client">Cliente</th>
+                                        <th data-i18n="loans.amount">Montante</th>
+                                        <th data-i18n="loans.installments">Parcelas</th>
+                                        <th data-i18n="loans.rate">Taxa</th>
+                                        <th data-i18n="loans.status">Status</th>
+                                        <th data-i18n="loans.startDate">Data Início</th>
+                                        <th data-i18n="common.actions">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="emprestimos-table-body">
+                                    <!-- Dynamic content -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Payment Management Section -->
+            <section id="payments" class="section">
+                <div class="section__header">
+                    <h1 data-i18n="payments.title">Gestão de Pagamentos</h1>
+                    <button class="btn btn--primary" id="new-payment-btn">
+                        <i class="fas fa-plus"></i>
+                        <span data-i18n="payments.newPayment">Registrar Pagamento</span>
+                    </button>
+                </div>
+                
+                <div class="card">
+                    <div class="card__body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th data-i18n="common.id">ID</th>
+                                        <th data-i18n="payments.loan">Empréstimo</th>
+                                        <th data-i18n="payments.installment">Parcela</th>
+                                        <th data-i18n="payments.amountPaid">Valor Pago</th>
+                                        <th data-i18n="payments.paymentDate">Data Pagamento</th>
+                                        <th data-i18n="payments.delay">Atraso</th>
+                                        <th data-i18n="payments.fine">Multa</th>
+                                        <th data-i18n="common.actions">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="pagamentos-table-body">
+                                    <!-- Dynamic content -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Reports Section -->
+            <section id="reports" class="section">
+                <div class="section__header">
+                    <h1 data-i18n="reports.title">Relatórios e Exportação</h1>
+                </div>
+                
+                <div class="card">
+                    <div class="card__header">
+                        <h3 data-i18n="reports.exportData">Exportar Dados</h3>
+                    </div>
+                    <div class="card__body">
+                        <div class="form-group">
+                            <label data-i18n="reports.reportType">Tipo de Relatório</label>
+                            <select id="report-type" class="form-control">
+                                <option value="loans" data-i18n="nav.loans">Empréstimos</option>
+                                <option value="payments" data-i18n="nav.payments">Pagamentos</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label data-i18n="reports.period">Período</label>
+                            <div class="date-range">
+                                <input type="date" id="start-date" class="form-control">
+                                <input type="date" id="end-date" class="form-control">
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn--primary" id="export-csv-btn">
+                        <i class="fas fa-download"></i>
+                        <span data-i18n="reports.exportCSV">Exportar CSV</span>
+                    </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Modal for Loan Form -->
+    <div id="loan-modal" class="modal hidden">
+        <div class="modal__backdrop"></div>
+        <div class="modal__content">
+            <div class="modal__header">
+                <h3 id="loan-modal-title" data-i18n="loans.newLoan">Novo Empréstimo</h3>
+                <button class="modal__close" id="close-loan-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal__body">
+                <form id="loan-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" data-i18n="loans.client">Cliente</label>
+                            <input type="text" id="loan-cliente" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" data-i18n="common.segment">Segmento</label>
+                            <select id="loan-segmento" class="form-control" required>
+                                <option value="">Selecionar...</option>
+                                <option value="Pessoal">Pessoal</option>
+                                <option value="Imobiliário">Imobiliário</option>
+                                <option value="Empresarial">Empresarial</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" data-i18n="loans.amount">Montante (€)</label>
+                            <input type="number" id="loan-montante" class="form-control" min="1" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" data-i18n="loans.rate">Taxa Anual (%)</label>
+                            <input type="number" id="loan-taxa" class="form-control" min="0" max="100" step="0.1" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" data-i18n="loans.installments">Número de Parcelas</label>
+                            <input type="number" id="loan-parcelas" class="form-control" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" data-i18n="common.risk">Score de Risco</label>
+                            <select id="loan-risco" class="form-control" required>
+                                <option value="">Selecionar...</option>
+                                <option value="A">A - Baixo Risco</option>
+                                <option value="B">B - Risco Moderado</option>
+                                <option value="C">C - Risco Médio</option>
+                                <option value="D">D - Alto Risco</option>
+                                <option value="E">E - Muito Alto Risco</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" data-i18n="loans.startDate">Data de Início</label>
+                        <input type="date" id="loan-data-inicio" class="form-control" required>
+                    </div>
+                    <div class="calculated-values">
+                        <div class="form-group">
+                            <label class="form-label">Valor da Parcela (calculado)</label>
+                            <input type="text" id="loan-parcela-valor" class="form-control" readonly>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal__footer">
+                <button type="button" class="btn btn--outline" id="cancel-loan-btn" data-i18n="common.cancel">Cancelar</button>
+                <button type="submit" form="loan-form" class="btn btn--primary" id="save-loan-btn" data-i18n="common.save">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Payment Form -->
+    <div id="payment-modal" class="modal hidden">
+        <div class="modal__backdrop"></div>
+        <div class="modal__content">
+            <div class="modal__header">
+                <h3 data-i18n="payments.newPayment">Registrar Pagamento</h3>
+                <button class="modal__close" id="close-payment-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal__body">
+                <form id="payment-form">
+                    <div class="form-group">
+                        <label class="form-label" data-i18n="payments.loan">Empréstimo</label>
+                        <select id="payment-emprestimo" class="form-control" required>
+                            <option value="">Selecionar empréstimo...</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" data-i18n="payments.installment">Número da Parcela</label>
+                            <input type="number" id="payment-parcela" class="form-control" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" data-i18n="payments.amountPaid">Valor Pago (€)</label>
+                            <input type="number" id="payment-valor" class="form-control" min="0" step="0.01" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" data-i18n="payments.paymentDate">Data do Pagamento</label>
+                        <input type="date" id="payment-data" class="form-control" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal__footer">
+                <button type="button" class="btn btn--outline" id="cancel-payment-btn" data-i18n="common.cancel">Cancelar</button>
+                <button type="submit" form="payment-form" class="btn btn--primary" data-i18n="common.save">Registrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

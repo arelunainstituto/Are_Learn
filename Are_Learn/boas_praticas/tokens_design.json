@@ -1,0 +1,223 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/schema.json",
+  "version": "1.0.0",
+  "brand": "Instituto Areluna",
+  "description": "Design tokens simplificados para projetos Areluna",
+  "colors": {
+    "primary": {
+      "goldLeaf": {
+        "value": "#D4AF37",
+        "type": "color",
+        "description": "Cor dourada principal - Luxo e nobreza",
+        "rgb": "rgb(212, 175, 55)",
+        "hsl": "hsl(46, 63%, 52%)"
+      },
+      "battleshipGrey": {
+        "value": "#858585",
+        "type": "color",
+        "description": "Cinza principal - Estabilidade e profissionalismo",
+        "rgb": "rgb(133, 133, 133)",
+        "hsl": "hsl(0, 0%, 52%)"
+      },
+      "jet": {
+        "value": "#292929",
+        "type": "color",
+        "description": "Preto profundo - Contraste e seriedade",
+        "rgb": "rgb(41, 41, 41)",
+        "hsl": "hsl(0, 0%, 16%)"
+      }
+    },
+    "secondary": {
+      "glossyGrey": {
+        "value": "#A295B3",
+        "type": "color",
+        "description": "Lilás elegante - Acento moderno",
+        "rgb": "rgb(162, 149, 179)",
+        "hsl": "hsl(266, 17%, 64%)"
+      },
+      "white": {
+        "value": "#FFFFFF",
+        "type": "color",
+        "description": "Branco puro - Base e contraste",
+        "rgb": "rgb(255, 255, 255)",
+        "hsl": "hsl(0, 0%, 100%)"
+      }
+    },
+    "functional": {
+      "success": {
+        "value": "#10B981",
+        "type": "color",
+        "description": "Verde para sucesso e confirmações"
+      },
+      "error": {
+        "value": "#EF4444",
+        "type": "color",
+        "description": "Vermelho para erros e alertas"
+      },
+      "warning": {
+        "value": "#F59E0B",
+        "type": "color",
+        "description": "Laranja para avisos"
+      },
+      "info": {
+        "value": "#3B82F6",
+        "type": "color",
+        "description": "Azul para informações"
+      }
+    }
+  },
+  "fonts": {
+    "families": {
+      "titleSerif": {
+        "value": "Kindel Sherif, Playfair Display, Georgia, serif",
+        "type": "fontFamily",
+        "description": "Fonte serifada para títulos institucionais",
+        "usage": "Logos, headers, materiais impressos"
+      },
+      "titleSans": {
+        "value": "Poppins, system-ui, sans-serif",
+        "type": "fontFamily",
+        "description": "Fonte sans-serif moderna para títulos digitais",
+        "usage": "Posts redes sociais, títulos web"
+      },
+      "body": {
+        "value": "Avenir Next, Inter, -apple-system, system-ui, sans-serif",
+        "type": "fontFamily",
+        "description": "Fonte principal para corpo de texto",
+        "usage": "Parágrafos, textos longos, interface"
+      },
+      "bodyAlt": {
+        "value": "Inter, -apple-system, BlinkMacSystemFont, sans-serif",
+        "type": "fontFamily",
+        "description": "Fonte alternativa para web",
+        "usage": "UI elements, botões, labels"
+      }
+    },
+    "weights": {
+      "thin": 100,
+      "light": 300,
+      "regular": 400,
+      "medium": 500,
+      "semibold": 600,
+      "bold": 700
+    },
+    "sizes": {
+      "xs": {
+        "value": "0.75rem",
+        "px": "12px",
+        "description": "Extra pequeno - Labels, notas"
+      },
+      "sm": {
+        "value": "0.875rem",
+        "px": "14px",
+        "description": "Pequeno - Textos secundários"
+      },
+      "base": {
+        "value": "1rem",
+        "px": "16px",
+        "description": "Base - Corpo de texto padrão"
+      },
+      "lg": {
+        "value": "1.125rem",
+        "px": "18px",
+        "description": "Grande - Leads, introduções"
+      },
+      "xl": {
+        "value": "1.25rem",
+        "px": "20px",
+        "description": "Extra grande - Subtítulos"
+      },
+      "2xl": {
+        "value": "1.5rem",
+        "px": "24px",
+        "description": "2XL - Títulos H3"
+      },
+      "3xl": {
+        "value": "1.875rem",
+        "px": "30px",
+        "description": "3XL - Títulos H2"
+      },
+      "4xl": {
+        "value": "2.25rem",
+        "px": "36px",
+        "description": "4XL - Títulos H1"
+      },
+      "5xl": {
+        "value": "3rem",
+        "px": "48px",
+        "description": "5XL - Títulos hero"
+      }
+    },
+    "lineHeights": {
+      "tight": 1.25,
+      "normal": 1.5,
+      "relaxed": 1.75,
+      "loose": 2
+    }
+  },
+  "spacing": {
+    "xs": "0.25rem",
+    "sm": "0.5rem",
+    "md": "1rem",
+    "lg": "1.5rem",
+    "xl": "2rem",
+    "2xl": "3rem",
+    "3xl": "4rem",
+    "4xl": "6rem"
+  },
+  "borderRadius": {
+    "none": "0",
+    "sm": "0.125rem",
+    "md": "0.375rem",
+    "lg": "0.5rem",
+    "xl": "1rem",
+    "full": "9999px"
+  },
+  "shadows": {
+    "sm": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+    "md": "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+    "lg": "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
+    "xl": "0 20px 25px -5px rgba(0, 0, 0, 0.1)",
+    "gold": "0 4px 14px 0 rgba(212, 175, 55, 0.39)"
+  },
+  "breakpoints": {
+    "sm": "640px",
+    "md": "768px",
+    "lg": "1024px",
+    "xl": "1280px",
+    "2xl": "1536px"
+  },
+  "animations": {
+    "durations": {
+      "fast": "150ms",
+      "normal": "300ms",
+      "slow": "500ms"
+    },
+    "easings": {
+      "ease": "ease",
+      "easeIn": "ease-in",
+      "easeOut": "ease-out",
+      "easeInOut": "ease-in-out",
+      "smooth": "cubic-bezier(0.4, 0, 0.2, 1)"
+    }
+  },
+  "logo": {
+    "minSizes": {
+      "digital": "120px",
+      "print": "30mm"
+    },
+    "clearSpace": "1x",
+    "variants": {
+      "instituto": "Logo completo - Instituto Areluna",
+      "areluna": "Logo simplificado - Areluna",
+      "symbol": "Símbolo circular isolado",
+      "academy": "Sub-marca - Academy Areluna"
+    }
+  },
+  "metadata": {
+    "brand": "Instituto Areluna",
+    "tagline": "Medicina Dentária & Estética Avançada",
+    "concept": "Elegância clássica greco-romana com luxo moderno",
+    "keywords": ["Elegância", "Modernidade", "Sofisticação", "Arte", "Excelência"]
+  }
+}

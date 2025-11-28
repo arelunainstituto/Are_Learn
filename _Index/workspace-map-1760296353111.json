@@ -1,0 +1,281 @@
+{
+  "timestamp": "2025-10-12T19:12:33.111Z",
+  "count": 35,
+  "items": [
+    {
+      "path": "Grupo AreLuna",
+      "name": "@areluna/monorepo",
+      "private": true,
+      "type": "package",
+      "meta": null
+    },
+    {
+      "path": "Grupo AreLuna/FERRAMENTAS/configuracoes",
+      "name": "configuracoes",
+      "private": false,
+      "type": "package",
+      "meta": null
+    },
+    {
+      "path": "Grupo AreLuna/Leitor-De-Faturas",
+      "name": "qr-reader-service",
+      "private": false,
+      "type": "api-app",
+      "meta": {
+        "name": "Leitor-De-Faturas",
+        "client": "Grupo AreLuna",
+        "year": 2025,
+        "status": "active"
+      }
+    },
+    {
+      "path": "Grupo AreLuna/PROJETOS-TECNOLOGICOS",
+      "name": "@areluna/monorepo",
+      "private": true,
+      "type": "db-package",
+      "meta": {
+        "name": "PROJETOS-TECNOLOGICOS",
+        "client": "Grupo AreLuna",
+        "year": 2025,
+        "status": "active"
+      }
+    },
+    {
+      "path": "Grupo AreLuna/PROJETOS-TECNOLOGICOS/ERP-Grupo-AreLuna/erp-grupo-areluna",
+      "name": "erp-grupo-areluna",
+      "private": true,
+      "type": "web-app",
+      "meta": null
+    },
+    {
+      "path": "Grupo AreLuna/PROJETOS-TECNOLOGICOS/Portais-Empresas/instituto-areluna",
+      "name": "instituto-areluna",
+      "private": true,
+      "type": "web-app",
+      "meta": null
+    },
+    {
+      "path": "Grupo AreLuna/PROJETOS-TECNOLOGICOS/Portais-Empresas/instituto-areluna/.next",
+      "name": ".next",
+      "private": false,
+      "type": "package",
+      "meta": null
+    },
+    {
+      "path": "Grupo AreLuna/PROJETOS-TECNOLOGICOS/Sistema-Inventario/Inventario Patrimonio/inventory-app",
+      "name": "inventory-app",
+      "private": true,
+      "type": "web-app",
+      "meta": null
+    },
+    {
+      "path": "Grupo AreLuna/PROJETOS-TECNOLOGICOS/apps/web",
+      "name": "@areluna/web",
+      "private": true,
+      "type": "web-app",
+      "meta": null
+    },
+    {
+      "path": "Grupo AreLuna/PROJETOS-TECNOLOGICOS/apps/web/.next",
+      "name": ".next",
+      "private": false,
+      "type": "package",
+      "meta": null
+    },
+    {
+      "path": "Grupo AreLuna/PROJETOS-TECNOLOGICOS/frontend-erp-areluna",
+      "name": "frontend-erp-areluna",
+      "private": true,
+      "type": "web-app",
+      "meta": null
+    },
+    {
+      "path": "Grupo AreLuna/PROJETOS-TECNOLOGICOS/frontend-erp-areluna/.next",
+      "name": ".next",
+      "private": false,
+      "type": "package",
+      "meta": null
+    },
+    {
+      "path": "Grupo AreLuna/PROJETOS-TECNOLOGICOS/gestao-iva-frontend",
+      "name": "gestao-iva-frontend",
+      "private": true,
+      "type": "web-app",
+      "meta": null
+    },
+    {
+      "path": "Grupo AreLuna/PROJETOS-TECNOLOGICOS/gestao-iva-frontend/.next",
+      "name": ".next",
+      "private": false,
+      "type": "package",
+      "meta": null
+    },
+    {
+      "path": "Grupo AreLuna/PROJETOS-TECNOLOGICOS/gestao-iva-grupo-areluna/out/types",
+      "name": "types",
+      "private": false,
+      "type": "package",
+      "meta": null
+    },
+    {
+      "path": "Grupo AreLuna/PROJETOS-TECNOLOGICOS/packages/auth",
+      "name": "@areluna/auth",
+      "private": false,
+      "type": "package",
+      "meta": null
+    },
+    {
+      "path": "Grupo AreLuna/PROJETOS-TECNOLOGICOS/packages/core",
+      "name": "@areluna/core",
+      "private": false,
+      "type": "package",
+      "meta": null
+    },
+    {
+      "path": "Grupo AreLuna/PROJETOS-TECNOLOGICOS/packages/ui",
+      "name": "@areluna/ui",
+      "private": false,
+      "type": "package",
+      "meta": null
+    },
+    {
+      "path": "Grupo AreLuna/PROJETOS-TECNOLOGICOS/prisma",
+      "name": "@areluna/database",
+      "private": true,
+      "type": "package",
+      "meta": null
+    },
+    {
+      "path": "Grupo AreLuna/Prostoral LAB app",
+      "name": "@areluna/monorepo",
+      "private": true,
+      "type": "package",
+      "meta": {
+        "name": "Prostoral LAB app",
+        "client": "Grupo AreLuna",
+        "year": 2025,
+        "status": "active"
+      }
+    },
+    {
+      "path": "Grupo AreLuna/Prostoral LAB app/FERRAMENTAS/configuracoes",
+      "name": "configuracoes",
+      "private": false,
+      "type": "package",
+      "meta": null
+    },
+    {
+      "path": "Grupo AreLuna/Prostoral LAB app/PROJETOS-TECNOLOGICOS",
+      "name": "@areluna/monorepo",
+      "private": true,
+      "type": "db-package",
+      "meta": null
+    },
+    {
+      "path": "Grupo AreLuna/Prostoral LAB app/PROJETOS-TECNOLOGICOS/Portais-Empresas/instituto-areluna",
+      "name": "instituto-areluna",
+      "private": true,
+      "type": "web-app",
+      "meta": null
+    },
+    {
+      "path": "Grupo AreLuna/Prostoral LAB app/PROJETOS-TECNOLOGICOS/apps/web",
+      "name": "@areluna/web",
+      "private": true,
+      "type": "web-app",
+      "meta": null
+    },
+    {
+      "path": "Grupo AreLuna/Prostoral LAB app/PROJETOS-TECNOLOGICOS/gestao-iva-grupo-areluna",
+      "name": "gestao-iva-grupo-areluna",
+      "private": true,
+      "type": "web-app",
+      "meta": null
+    },
+    {
+      "path": "Grupo AreLuna/Prostoral LAB app/PROJETOS-TECNOLOGICOS/packages/auth",
+      "name": "@areluna/auth",
+      "private": false,
+      "type": "package",
+      "meta": null
+    },
+    {
+      "path": "Grupo AreLuna/Prostoral LAB app/PROJETOS-TECNOLOGICOS/packages/core",
+      "name": "@areluna/core",
+      "private": false,
+      "type": "package",
+      "meta": null
+    },
+    {
+      "path": "Grupo AreLuna/Prostoral LAB app/PROJETOS-TECNOLOGICOS/packages/ui",
+      "name": "@areluna/ui",
+      "private": false,
+      "type": "package",
+      "meta": null
+    },
+    {
+      "path": "Grupo AreLuna/Prostoral LAB app/PROJETOS-TECNOLOGICOS/prisma",
+      "name": "@areluna/database",
+      "private": true,
+      "type": "package",
+      "meta": null
+    },
+    {
+      "path": "Grupo AreLuna/Prostoral LAB app/Prostoral LAB app",
+      "name": "prostoral-lab",
+      "private": false,
+      "type": "api-app",
+      "meta": null
+    },
+    {
+      "path": "Grupo AreLuna/Prostoral LAB app/QR-Code-Generator",
+      "name": "qr-code-generator-areluna",
+      "private": false,
+      "type": "api-app",
+      "meta": null
+    },
+    {
+      "path": "Grupo AreLuna/QR-Code-Generator",
+      "name": "qr-code-generator-areluna",
+      "private": false,
+      "type": "api-app",
+      "meta": {
+        "name": "QR-Code-Generator",
+        "client": "Grupo AreLuna",
+        "year": 2025,
+        "status": "active"
+      }
+    },
+    {
+      "path": "Grupo AreLuna/frontend-grupo-areluna",
+      "name": "frontend-grupo-areluna",
+      "private": true,
+      "type": "web-app",
+      "meta": {
+        "name": "frontend-grupo-areluna",
+        "client": "Grupo AreLuna",
+        "year": 2025,
+        "status": "active"
+      }
+    },
+    {
+      "path": "Grupo AreLuna/frontend-grupo-areluna/.next",
+      "name": ".next",
+      "private": false,
+      "type": "package",
+      "meta": null
+    },
+    {
+      "path": "Grupo AreLuna/leitor-de-arquivos-saft",
+      "name": "@areluna/leitor-arquivos-saft",
+      "private": false,
+      "type": "package",
+      "meta": {
+        "name": "leitor-de-arquivos-saft",
+        "client": "Grupo AreLuna",
+        "year": 2025,
+        "status": "active"
+      }
+    }
+  ]
+}

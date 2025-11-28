@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instituto Areluna - Dashboard Orçamento 2025</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1F4E78 0%, #2E6BA8 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .nav {
+            background: #f8f9fa;
+            padding: 20px;
+            border-bottom: 2px solid #e9ecef;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-button {
+            padding: 12px 30px;
+            background: white;
+            border: 2px solid #1F4E78;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            color: #1F4E78;
+        }
+        
+        .nav-button:hover {
+            background: #1F4E78;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(31, 78, 120, 0.3);
+        }
+        
+        .nav-button.active {
+            background: #1F4E78;
+            color: white;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .metric-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+        
+        .metric-card h3 {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .metric-card .value {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .metric-card .delta {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        .section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .section h2 {
+            color: #1F4E78;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        thead {
+            background: #1F4E78;
+            color: white;
+        }
+        
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+        
+        tbody tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        tbody tr:hover {
+            background: #e9ecef;
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            height: 300px;
+            gap: 10px;
+        }
+        
+        .bar {
+            flex: 1;
+            background: linear-gradient(to top, #667eea, #764ba2);
+            border-radius: 10px 10px 0 0;
+            position: relative;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .bar:hover {
+            filter: brightness(1.2);
+            transform: scaleY(1.05);
+        }
+        
+        .bar-label {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #666;
+            font-weight: 600;
+        }
+        
+        .bar-value {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8em;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+        
+        .scenario-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .scenario-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid #1F4E78;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .scenario-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .scenario-card h3 {
+            color: #1F4E78;
+            margin-bottom: 10px;
+            font-size: 1.5em;
+        }
+        
+        .scenario-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .info-box {
+            background: #e3f2fd;
+            border-left: 5px solid #2196F3;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .warning-box {
+            background: #fff3e0;
+            border-left: 5px solid #ff9800;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .success-box {
+            background: #e8f5e9;
+            border-left: 5px solid #4caf50;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .footer {
+            background: #1F4E78;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .footer p {
+            margin: 5px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .metrics {
+                grid-template-columns: 1fr;
+            }
+            
+            .scenario-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Instituto Areluna</h1>
+            <p>Dashboard Orçamento Empresarial 2025</p>
+        </div>
+        
+        <div class="nav">
+            <button class="nav-button active" onclick="showPage('overview')">📈 Visão Geral</button>
+            <button class="nav-button" onclick="showPage('financial')">💰 Análise Financeira</button>
+            <button class="nav-button" onclick="showPage('scenarios')">📊 Cenários</button>
+            <button class="nav-button" onclick="showPage('assumptions')">⚙️ Premissas</button>
+        </div>
+        
+        <div class="content">
+            <!-- Página: Visão Geral -->
+            <div id="overview" class="page active">
+                <div class="metrics">
+                    <div class="metric-card">
+                        <h3>💵 Receita Total 2025</h3>
+                        <div class="value">R$ 0,00</div>
+                        <div class="delta">+15% vs 2024</div>
+                    </div>
+                    <div class="metric-card">
+                        <h3>📊 LAIR Total</h3>
+                        <div class="value">R$ -36.000</div>
+                        <div class="delta">Custos fixos mensais</div>
+                    </div>
+                    <div class="metric-card">
+                        <h3>💎 Lucro Líquido</h3>
+                        <div class="value">R$ -36.000</div>
+                        <div class="delta">Requer input de receitas</div>
+                    </div>
+                    <div class="metric-card">
+                        <h3>💰 Saldo Caixa (Dez)</h3>
+                        <div class="value">R$ 64.600</div>
+                        <div class="delta">Projeção conservadora</div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2>📊 Receita Mensal Projetada 2025</h2>
+                    <div class="chart-container">
+                        <div class="bar-chart">
+                            <div style="flex-direction: column; display: flex; align-items: center;">
+                                <div class="bar" style="height: 10%;"></div>
+                                <div class="bar-label">Jan</div>
+                            </div>
+                            <div style="flex-direction: column; display: flex; align-items: center;">
+                                <div class="bar" style="height: 10%;"></div>
+                                <div class="bar-label">Fev</div>
+                            </div>
+                            <div style="flex-direction: column; display: flex; align-items: center;">
+                                <div class="bar" style="height: 10%;"></div>
+                                <div class="bar-label">Mar</div>
+                            </div>
+                            <div style="flex-direction: column; display: flex; align-items: center;">
+                                <div class="bar" style="height: 10%;"></div>
+                                <div class="bar-label">Abr</div>
+                            </div>
+                            <div style="flex-direction: column; display: flex; align-items: center;">
+                                <div class="bar" style="height: 10%;"></div>
+                                <div class="bar-label">Mai</div>
+                            </div>
+                            <div style="flex-direction: column; display: flex; align-items: center;">
+                                <div class="bar" style="height: 10%;"></div>
+                                <div class="bar-label">Jun</div>
+                            </div>
+                            <div style="flex-direction: column; display: flex; align-items: center;">
+                                <div class="bar" style="height: 10%;"></div>
+                                <div class="bar-label">Jul</div>
+                            </div>
+                            <div style="flex-direction: column; display: flex; align-items: center;">
+                                <div class="bar" style="height: 10%;"></div>
+                                <div class="bar-label">Ago</div>
+                            </div>
+                            <div style="flex-direction: column; display: flex; align-items: center;">
+                                <div class="bar" style="height: 10%;"></div>
+                                <div class="bar-label">Set</div>
+                            </div>
+                            <div style="flex-direction: column; display: flex; align-items: center;">
+                                <div class="bar" style="height: 10%;"></div>
+                                <div class="bar-label">Out</div>
+                            </div>
+                            <div style="flex-direction: column; display: flex; align-items: center;">
+                                <div class="bar" style="height: 10%;"></div>
+                                <div class="bar-label">Nov</div>
+                            </div>
+                            <div style="flex-direction: column; display: flex; align-items: center;">
+                                <div class="bar" style="height: 10%;"></div>
+                                <div class="bar-label">Dez</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-box">
+                    <h3>ℹ️ Próximos Passos</h3>
+                    <p><strong>Para visualizar dados reais:</strong></p>
+                    <ol style="margin-left: 20px; margin-top: 10px;">
+                        <li>Preencha valores em "DRE por Produto"</li>
+                        <li>Preencha salários em "Cargos e Salários"</li>
+                        <li>Execute: <code>python3 scripts/run_update.py</code></li>
+                        <li>Abra <strong>modelo-v1.xlsx</strong> para ver os cálculos</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <!-- Página: Análise Financeira -->
+            <div id="financial" class="page">
+                <div class="section">
+                    <h2>💰 Demonstração do Resultado do Exercício (DRE)</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Mês</th>
+                                <th>Faturamento</th>
+                                <th>CSV</th>
+                                <th>Lucro Bruto</th>
+                                <th>LAIR</th>
+                                <th>Lucro Líquido</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Janeiro</td>
+                                <td>R$ 0,00</td>
+                                <td>R$ 0,00</td>
+                                <td>R$ 0,00</td>
+                                <td>R$ -3.000</td>
+                                <td>R$ -3.000</td>
+                            </tr>
+                            <tr>
+                                <td>Fevereiro</td>
+                                <td>R$ 0,00</td>
+                                <td>R$ 0,00</td>
+                                <td>R$ 0,00</td>
+                                <td>R$ -3.000</td>
+                                <td>R$ -3.000</td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" style="text-align: center; padding: 20px; color: #666;">
+                                    ... (10 meses adicionais) ...
+                                </td>
+                            </tr>
+                            <tr style="background: #1F4E78; color: white; font-weight: bold;">
+                                <td>TOTAL ANO</td>
+                                <td>R$ 0,00</td>
+                                <td>R$ 0,00</td>
+                                <td>R$ 0,00</td>
+                                <td>R$ -36.000</td>
+                                <td>R$ -36.000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="section">
+                    <h2>💸 Fluxo de Caixa Projetado</h2>
+                    <div class="success-box">
+                        <h3>✅ Status do Caixa</h3>
+                        <p><strong>Saldo Inicial:</strong> R$ 100.000,00</p>
+                        <p><strong>Saldo Final Projetado:</strong> R$ 64.600,00</p>
+                        <p><strong>Geração de Caixa:</strong> R$ -35.400,00 (devido a custos fixos)</p>
+                        <p style="margin-top: 10px;">O saldo se mantém positivo durante todo o ano, mesmo sem receitas.</p>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2>📊 Análise de Margens</h2>
+                    <div class="metrics">
+                        <div class="metric-card">
+                            <h3>Margem Bruta</h3>
+                            <div class="value">-%</div>
+                            <div class="delta">Aguardando dados</div>
+                        </div>
+                        <div class="metric-card">
+                            <h3>Margem LAIR</h3>
+                            <div class="value">-%</div>
+                            <div class="delta">Aguardando dados</div>
+                        </div>
+                        <div class="metric-card">
+                            <h3>Margem Líquida</h3>
+                            <div class="value">-%</div>
+                            <div class="delta">Aguardando dados</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Página: Cenários -->
+            <div id="scenarios" class="page">
+                <div class="section">
+                    <h2>📊 Cenários de Análise</h2>
+                    <div class="info-box">
+                        <p>Os cenários permitem comparar diferentes situações de crescimento, preços e custos. Use a planilha <strong>modelo-v1.xlsx</strong> para análise detalhada.</p>
+                    </div>
+                    
+                    <div class="scenario-grid">
+                        <div class="scenario-card">
+                            <h3>🎯 Base</h3>
+                            <p><strong>Crescimento:</strong> 15%</p>
+                            <p><strong>Preços:</strong> Mantidos</p>
+                            <p><strong>Descrição:</strong> Cenário base com premissas conservadoras e crescimento sustentável.</p>
+                        </div>
+                        
+                        <div class="scenario-card">
+                            <h3>🚀 Otimista</h3>
+                            <p><strong>Crescimento:</strong> 20%</p>
+                            <p><strong>Preços:</strong> +10%</p>
+                            <p><strong>Descrição:</strong> Cenário otimista com crescimento acelerado e expansão de mercado.</p>
+                        </div>
+                        
+                        <div class="scenario-card">
+                            <h3>⚠️ Pessimista</h3>
+                            <p><strong>Crescimento:</strong> 5%</p>
+                            <p><strong>Preços:</strong> -5%</p>
+                            <p><strong>Descrição:</strong> Cenário conservador com restrições de mercado e pressão de preços.</p>
+                        </div>
+                        
+                        <div class="scenario-card">
+                            <h3>🎲 Conservador</h3>
+                            <p><strong>Crescimento:</strong> 10%</p>
+                            <p><strong>Preços:</strong> Mantidos</p>
+                            <p><strong>Descrição:</strong> Cenário conservador com crescimento moderado e custos controlados.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2>📈 Comparação de Cenários</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Métrica</th>
+                                <th>Base</th>
+                                <th>Otimista</th>
+                                <th>Pessimista</th>
+                                <th>Conservador</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Taxa de Crescimento</strong></td>
+                                <td>15%</td>
+                                <td>20%</td>
+                                <td>5%</td>
+                                <td>10%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ajuste de Preços</strong></td>
+                                <td>0%</td>
+                                <td>+10%</td>
+                                <td>-5%</td>
+                                <td>0%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Comissões</strong></td>
+                                <td>10%</td>
+                                <td>12%</td>
+                                <td>8%</td>
+                                <td>10%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Marketing (% Receita)</strong></td>
+                                <td>5%</td>
+                                <td>4%</td>
+                                <td>7%</td>
+                                <td>6%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Página: Premissas -->
+            <div id="assumptions" class="page">
+                <div class="section">
+                    <h2>⚙️ Premissas do Modelo</h2>
+                    <div class="info-box">
+                        <p>As premissas definem os parâmetros fundamentais do orçamento. Para alterá-las, edite a planilha <strong>"Assumptions"</strong> no arquivo modelo-v1.xlsx e execute novamente o script.</p>
+                    </div>
+                    
+                    <div class="metrics">
+                        <div class="metric-card">
+                            <h3>📈 Taxa de Crescimento 2025</h3>
+                            <div class="value">15%</div>
+                            <div class="delta">Base vs 2024</div>
+                        </div>
+                        <div class="metric-card">
+                            <h3>💰 Comissão Vendas</h3>
+                            <div class="value">10%</div>
+                            <div class="delta">Sobre receita</div>
+                        </div>
+                        <div class="metric-card">
+                            <h3>📢 Marketing</h3>
+                            <div class="value">5%</div>
+                            <div class="delta">Da receita total</div>
+                        </div>
+                        <div class="metric-card">
+                            <h3>🏦 Saldo Inicial</h3>
+                            <div class="value">R$ 100.000</div>
+                            <div class="delta">Janeiro 2025</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2>💸 Prazos de Recebimento (AR)</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Prazo</th>
+                                <th>Peso</th>
+                                <th>Descrição</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>À vista (0 dias)</td>
+                                <td>70%</td>
+                                <td>Maioria dos recebimentos</td>
+                            </tr>
+                            <tr>
+                                <td>30 dias</td>
+                                <td>20%</td>
+                                <td>Parcelamentos curtos</td>
+                            </tr>
+                            <tr>
+                                <td>60 dias</td>
+                                <td>10%</td>
+                                <td>Parcelamentos longos</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="section">
+                    <h2>💳 Prazos de Pagamento (AP)</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Prazo</th>
+                                <th>Peso</th>
+                                <th>Descrição</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>À vista (0 dias)</td>
+                                <td>80%</td>
+                                <td>Pagamentos imediatos</td>
+                            </tr>
+                            <tr>
+                                <td>30 dias</td>
+                                <td>20%</td>
+                                <td>Pagamentos a prazo</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="section">
+                    <h2>🏷️ Mapeamento Produto → Categoria</h2>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                        <div>
+                            <h3 style="color: #1F4E78; margin-bottom: 10px;">Odonto e Estética</h3>
+                            <ul style="list-style-type: none; padding: 0;">
+                                <li>✓ Reabilitação Oral</li>
+                                <li>✓ Harmonização Facial</li>
+                                <li>✓ Implantologia</li>
+                                <li>✓ Estética Dentária</li>
+                                <li>✓ Branqueamento Dentário</li>
+                                <li>✓ Odontopediatria</li>
+                                <li>✓ Ortopedia Facial</li>
+                                <li>✓ Periodotologia</li>
+                                <li>✓ Edondontia</li>
+                                <li>✓ Bruxismo</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 style="color: #1F4E78; margin-bottom: 10px;">Cursos</h3>
+                            <ul style="list-style-type: none; padding: 0;">
+                                <li>✓ Curso de Capacitação</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 style="color: #1F4E78; margin-bottom: 10px;">Implante Capilar</h3>
+                            <ul style="list-style-type: none; padding: 0;">
+                                <li>✓ Implante Capilar</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Instituto Areluna - Sistema de Orçamento 2025</strong></p>
+            <p>Dashboard desenvolvido com Python + Excel Automation</p>
+            <p style="margin-top: 15px; opacity: 0.8;">
+                Para análise completa, abra: <strong>Orçamento Empresarial - Instituto Areluna - modelo-v1.xlsx</strong>
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        function showPage(pageId) {
+            // Esconder todas as páginas
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Remover active de todos os botões
+            const buttons = document.querySelectorAll('.nav-button');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            // Mostrar página selecionada
+            document.getElementById(pageId).classList.add('active');
+            
+            // Adicionar active ao botão clicado
+            event.target.classList.add('active');
+        }
+        
+        // Adicionar animação aos cartões de métricas
+        document.addEventListener('DOMContentLoaded', function() {
+            const metricCards = document.querySelectorAll('.metric-card');
+            metricCards.forEach((card, index) => {
+                card.style.animation = `fadeIn 0.5s ease-out ${index * 0.1}s both`;
+            });
+        });
+    </script>
+</body>
+</html>
+

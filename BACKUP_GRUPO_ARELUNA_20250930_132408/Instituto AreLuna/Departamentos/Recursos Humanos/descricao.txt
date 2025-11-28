@@ -1,0 +1,5 @@
+# Recursos Humanos – Descrição
+Objetivo: (preencher)
+Principais processos: (preencher)
+Integrações: (preencher)
+Métricas/SLAs: (preencher)
